@@ -1,0 +1,41 @@
+body {
+    font-family: 'Microsoft Yahei',Verdana,arial,sans-serif;
+    font-size: 14px;
+}
+ul.tablist_2 li a.current:link, ul.tablist_2 li a.current:visited, ul.tablist_2 li a.current:hover
+{
+    background: #4E8CCF;
+    border: #0046ad 2px solid;
+    border-bottom-color: #4E8CCF;
+    border-left-color: #4E8CCF;
+    border-right-color: #4E8CCF;
+	color:#FFFFFF;
+}
+ul.tablist_2
+{
+    border-bottom-color: #0046ad;
+}
+.moduleTitle {
+    background-image: url("../images/index.php.gif");
+    background-color: #FFFFFF;
+    background-position: center top;
+    background-repeat: repeat-x;
+    vertical-align: middle;
+}
+.leftList ul li a{ color:#0B578F}
+.leftList ul li a:hover{ color:black;}
+
+.button{ margin-right:4px;}
+
+.resultdiv{border-bottom:1px solid #CBDAE6;border-top:2px solid #CBDAE6; background-color:#F6F6F6; margin-bottom:10px; height:30px; line-height:30px; display:none}
+
+#content {
+	paggin-buttom:0px;
+}
+
+.headerList a{float:left; margin:0px; }
+
+.sall_td a{height:30px; width:100px; border:1px solid #993; float:left; line-height:14px; margin:2px 2px 3px; text-align:center; background:#FC9; text-decoration:none }
+.sall_td a:hover{height:30px; width:100px; border:1px solid #993; float:left; line-height:14px; margin:2px 2px 3px; text-align:center ; background:#FC3; text-decoration:none; cursor:pointer}
+
+
