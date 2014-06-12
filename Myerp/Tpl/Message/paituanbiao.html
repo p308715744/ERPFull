@@ -1,0 +1,209 @@
+<tp:includeCA file="Index:showheader" />
+
+<link href="<{:__PUBLIC__}>/gulianstyle/styles/jquery.autocomplete.css" rel="stylesheet" type="text/css" />
+<script src="<{:__PUBLIC__}>/gulianstyle/styles/jquery.autocomplete.min.js" language="javascript"></script>
+<script language="javascript" type="text/javascript" src="<{:__PUBLIC__}>/myerp/My97DatePicker/WdatePicker.js"></script>
+<script language="javascript" type="text/javascript" src="<{:__PUBLIC__}>/myerp/Chanpin/xianlu.js"></script>
+<div id="main">
+  <tp:includeCA file="Message:left_kongguan" />
+  <div id="content" style="margin-left:180px;">
+  
+            <div id="resultdiv" class="resultdiv"></div>
+            <div id="resultdiv_2" class="resultdiv"></div>
+            
+            <include file="Index:search_message" />
+            
+            <table cellpadding="0" cellspacing="0" width="100%" class="list view">
+              <tbody>
+              
+                <tr class="pagination">
+                  <td colspan="11">
+                  <table cellpadding="0" cellspacing="0" width="100%" class="paginationTable">
+                      <tbody>
+                        <tr>
+                          <td nowrap="nowrap" class="paginationActionButtons">
+<php>if($is_fabu){</php>      
+                            <input type="button" class="button" value=" 发布 " onclick="opendialog_1()">
+<php>}</php>
+                          </td>
+                          <td nowrap="nowrap" align="right" class="paginationChangeButtons">
+                          	<{$page}>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    </td>
+                </tr>
+                
+                <tr height="20">
+                  <th scope="col" nowrap="nowrap"><div> 序号 </div></th>
+                  <th scope="col" nowrap="nowrap" style="text-align:center; width:70%; min-width:300px;"><div> 日期 </div></th>
+                  <th scope="col" nowrap="nowrap" style="text-align:center; width:20%; min-width:140px;"><div> 操作 </div></th>
+                </tr>
+                
+                <php> $i = -1; foreach($chanpin_list as $v){ $i++;</php>
+                <tr height="40" class="evenListRowS1">
+                  <td scope="row" align="left" valign="top"><{$i+1}></td>
+                  <td scope="row" align="center" valign="top"><{$v['title']}></td>
+                  <td scope="row" align="center" valign="top">
+<php>if($is_fabu){</php>      
+                        <input type="button" class="button" value=" 删除 " onclick="if(window.confirm('是否确认删除“<{$v['title']}>”排团表?')==true)infodelete('<{$v[messageID]}>')">
+                        <input type="button" class="button" value=" 编辑 " onclick="infoedit('<{$v[messageID]}>')">
+<php>}</php>
+                        <PHP>if($v['url_file']){</PHP>
+                        <input type="button" class="button" value=" 下载 " onclick="download('<{$v[url_file]}>')">
+                        <PHP>}</PHP>
+                  </td>
+                </tr>
+                <php> }</php>
+                
+                
+              </tbody>
+            </table>
+            
+  </div>
+  
+  
+</div>
+
+<tp:includeCA file="Index:footer" />
+
+<div id="dialog_gonggao" title="排团表" style="background:#FFF">
+
+    <iframe name="iframeUpload" src="" frameborder="0" SCROLLING="no" style="display:none"></iframe> 
+    <form name="form" id="form" method="post" action="<{:SITE_INDEX}>Message/dopostMessageInof/" enctype="multipart/form-data" target="iframeUpload"> 
+      <INPUT TYPE="hidden" name="uploadResponse" value="uploadComplete">
+    	<input type="hidden" name="type" value="排团表" />
+    	<input type="hidden" name="messageID" id="messageID"/>
+      <input type="hidden" name="ajax" value="1">
+      <table cellspacing="1" cellpadding="0" border="0" width="100%" class="edit view">
+        <tbody>
+          <tr>
+            <td valign="top" scope="row" style="min-width:50px;"> 标题: </td>
+            <td valign="top" scope="row" style="min-width:400px;">
+            <input name="title" type="text" id="info_title" style="width:400px;" check="^\S+$" warning="标题不能为空,且不能含有空格">
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" scope="row" style="min-width:50px;"> 排序值: </td>
+            <td valign="top" scope="row" style="min-width:400px;">
+            <input name="sortvalue" type="text" id="sortvalue"  value="0" onfocus="WdatePicker({dateFmt:'yyyyMM'})">
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" scope="row" style="min-width:50px;"> 接收部门: </td>
+            <td valign="top">
+            	<php>foreach($categorylist as $v){</php>
+                  <table cellspacing="1" cellpadding="0" border="0" width="100%">
+                    <tbody>
+                      <tr>
+                        <td valign="top" scope="row" style="min-width:50px; border-left:1px solid #94c1e8; width:100px;">
+                        	<input type="checkbox" onclick="toselect(this,'jieshou_<{$v[systemID]}>')"><{$v['title']}>
+                        </td>
+                        <td valign="top" scope="row" style="min-width:400px; border-left:1px solid #94c1e8;">
+                        	<php>foreach($v['systemDClist'] as $vol){</php>
+                            <label style="width:160px; float:left">
+                            <input type="checkbox" class="jieshou_<{$v['systemID']}> <{$vol['department']['systemID']}>" name="bumenlist[]" value="<{$vol['department']['systemID']}>"><{$vol['department']['title']}>
+                        	</label>
+                            <php>}</php>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+            	<php>}</php>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" scope="row" style="min-width:50px;"> 附件上传: </td>
+            <td valign="top" scope="row" style="min-width:400px;">
+            <input type="file" name="attachment" id="attachment" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+     </form>
+</div>
+<script type="text/javascript">
+
+function toselect(obj,classname){ 
+	if(jQuery(obj).attr('checked') == 'checked')
+		jQuery("."+classname).attr('checked','checked');
+	else
+		jQuery("."+classname).removeAttr('checked');	
+}
+
+jQuery(document).ready(function(){
+	// Dialog
+	jQuery('#dialog_gonggao').dialog({
+		autoOpen: false,
+		width: 1000,
+		buttons: {
+			"确认": function() {
+				if(CheckForm('form','resultdiv_2')){
+					document.getElementById('form').submit();
+				}
+			},
+			"取消": function() {
+				jQuery(this).dialog("close");
+			}
+		}
+	});
+});
+// Dialog Link
+function opendialog_1(){
+	jQuery('#dialog_gonggao').dialog('open');
+}
+function doComplete(data,status){
+	if(status == 1){
+		location.reload();
+	}
+}
+function infodelete(messageID){
+		jQuery.ajax({
+			type:	"POST",
+			url:	"<{:SITE_INDEX}>Message/infodelete/messageID/"+messageID,
+			data:	"",
+			success:function(msg){
+				ThinkAjax.myAjaxResponse(msg,'resultdiv_2',doComplete);
+			}
+		});
+}
+function infoedit(messageID){
+		jQuery.ajax({
+			type:	"POST",
+			url:	"<{:SITE_INDEX}>Message/index/datatype/排团表/returntype/array/messageID/"+messageID,
+			data:	"",
+			success:function(msg){
+				ThinkAjax.myAjaxResponse(msg,'',arraymessage_after);
+			}
+		});
+}
+function arraymessage_after(data,status){
+	if(status == 1){
+		jQuery("#info_title").val(data['title']);
+		jQuery("#sortvalue").val(data['sortvalue']);
+		jQuery("#messageID").val(data['messageID']);
+		if(data['bumenlist'])
+			for(var i = 0, l = data['bumenlist'].length; i< l; i++){
+				jQuery("."+data['bumenlist'][i]).attr('checked','checked');
+			}
+		jQuery('#dialog_gonggao').dialog('open');
+	}
+}
+
+function uploadComplete(data){
+  ThinkAjax.myAjaxResponse(data,'resultdiv',doComplete);
+}
+
+function download(url){
+	window.location = '<{:SITE_DATA}>Files/'+url;
+}
+function dosearch(str)
+{
+		window.location = SITE_INDEX+'Message/index'+str;
+}
+</script> 
+
+
+
+

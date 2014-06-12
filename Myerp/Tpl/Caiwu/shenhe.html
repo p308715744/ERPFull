@@ -1,0 +1,251 @@
+<tp:includeCA file="Index:showheader" />
+<script language="javascript" type="text/javascript" src="<{:__PUBLIC__}>/myerp/My97DatePicker/WdatePicker.js"></script>
+<script language="javascript" type="text/javascript" src="<{:__PUBLIC__}>/myerp/Chanpin/xianlu.js"></script>
+
+<div id="main">
+
+  <tp:includeCA file="Caiwu:left_fabu" />
+  <div id="content" style="margin-left:180px;">
+  
+            <div id="resultdiv" class="resultdiv"></div>
+            <div id="resultdiv_2" class="resultdiv"></div>
+            
+            <include file="Index:search_taskshenhe" />
+            
+            <php>if($type == '收支项' || $type == '报账单'){</php>
+            <div id="mysearchdiv" style="margin:10px 0 0 0;">
+              <ul id="searchTabs" class="tablist tablist_2">
+                <li> <a 
+                  <php>if($datakind == '全部'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Caiwu/shenhe/type/<{$type}>">全部</a> </li>
+                <li> <a 
+                  <php>if($datakind == '团队报账单'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Caiwu/shenhe/type/<{$type}>/datakind/团队报账单">团队</a> </li>
+                <li> <a 
+                  <php>if($datakind == '签证'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Caiwu/shenhe/type/<{$type}>/datakind/签证">签证</a> </li>
+                <li> <a 
+                  <php>if($datakind == '办证'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Caiwu/shenhe/type/<{$type}>/datakind/办证">办证</a> </li>
+                <li> <a 
+                  <php>if($datakind == '交通'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Caiwu/shenhe/type/<{$type}>/datakind/交通">交通</a> </li>
+                <li> <a 
+                  <php>if($datakind == '订房'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Caiwu/shenhe/type/<{$type}>/datakind/订房">订房</a> </li>
+                <li> <a 
+                  <php>if($datakind == '餐饮'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Caiwu/shenhe/type/<{$type}>/datakind/餐饮">订餐</a> </li>
+                <li> <a 
+                  <php>if($datakind == '门票'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Caiwu/shenhe/type/<{$type}>/datakind/门票">门票</a> </li>
+                <li> <a 
+                  <php>if($datakind == '导游'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Caiwu/shenhe/type/<{$type}>/datakind/导游">导游</a> </li>
+                <li> <a 
+                  <php>if($datakind == '补账'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Caiwu/shenhe/type/<{$type}>/datakind/补账">补账</a> </li>
+              </ul>
+            </div>
+            <php> }</php>
+                
+            <table cellpadding="0" cellspacing="0" width="100%" class="list view">
+              <tbody>
+                <tr class="pagination">
+                  <td colspan="11">
+                  <table cellpadding="0" cellspacing="0" width="100%" class="paginationTable">
+                      <tbody>
+                        <tr>
+                          <td nowrap="nowrap" align="right" class="paginationChangeButtons" style="color:#090"><{$page}></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    </td>
+                </tr>
+                <php>if($type == '收支项'){</php>
+                <tr height="20">
+                  <th scope="col" nowrap="nowrap"><div> 序号 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:300px;"><div> 团名（单项服务名） </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:100px;"><div> 团期 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:100px;"><div> 团号 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:60px;"><div> 计调 </div></th>
+                  <th scope="col" nowrap="nowrap"><div> 人数 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:200px;"><div> 报账项目 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:60px;"><div> 金额 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:60px;"><div> 操作 </div></th>
+                </tr>
+                <php> $i = -1; foreach($chanpin_list as $v){ $i++;</php>
+                <tr height="40" class="evenListRowS1">
+                  <td scope="row" align="left" valign="top"><{$i+1}></td>
+                  <td scope="row" align="left" valign="top">
+                  <php>if($v['tuantitle_copy']) echo $v['tuantitle_copy']; else echo $v['baozhangtitle_copy']</php>
+                  </td>
+                  <td scope="row" align="left" valign="top"><{$v['tuanqi_copy']}></td>
+                  <td scope="row" align="left" valign="top"><{$v['tuanhao_copy']}></td>
+                  <td scope="row" align="left" valign="top"><{$v['baozhang']['user_name']}></td>
+                  <td scope="row" align="left" valign="top"><{$v['baozhang']['renshu']}></td>
+                  <td scope="row" align="left" valign="top"><a href="<{:SITE_INDEX}>Chanpin/zituanxiangmu/baozhangID/<{$v['datatext_copy']['parentID']}>" target="_blank"><{$v['title_copy']}></a></td>
+                  <td scope="row" align="left" valign="top"><{$v['datatext_copy']['value']}></td>
+                  <td scope="row" align="left" valign="top">
+              <input type="button" class="button" value="查看" name="button" onClick="showinfo_item(<{$v['datatext_copy']['parentID']}>);">
+                  </td>
+                </tr>
+                <php> }}</php>
+                
+                <php>if($type == '报账单'){</php>
+                <tr height="20">
+                  <th scope="col" nowrap="nowrap"><div> 序号 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:300px;"><div> 团名（单项服务名） </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:80px;"><div> 类型 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:100px;"><div> 团期 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:100px;"><div> 团号 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:60px;"><div> 计调 </div></th>
+                  <th scope="col" nowrap="nowrap"><div> 人数 </div></th>
+                  <th scope="col" nowrap="nowrap"><div> 总收入 </div></th>
+                  <th scope="col" nowrap="nowrap"><div> 总支出 </div></th>
+                  <th scope="col" nowrap="nowrap"><div> 盈亏 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:80px;"><div> 操作 </div></th>
+                </tr>
+                <php> $i = -1; foreach($chanpin_list as $v){$i++; $datatext = simple_unserialize($v['datatext_copy']['datatext']);</php>
+                <tr height="40" class="evenListRowS1">
+                  <td scope="row" align="left" valign="top"><{$i+1}></td>
+                  <td scope="row" align="left" valign="top"><a href="<{:SITE_INDEX}>Chanpin/zituanbaozhang/baozhangID/<{$v['datatext_copy']['chanpinID']}>" target="_blank">
+                  <php>if($v['tuantitle_copy']) echo $v['tuantitle_copy']; else echo $v['title_copy']</php></a>
+                  </td>
+                  <td scope="row" align="left" valign="top"><{$v['datatext_copy']['type']}></td>
+                  <td scope="row" align="left" valign="top"><{$v['tuanqi_copy']}></td>
+                  <td scope="row" align="left" valign="top"><{$v['tuanhao_copy']}></td>
+                  <td scope="row" align="left" valign="top"><{$v['datatext_copy']['user_name']}></td>
+                  <td scope="row" align="left" valign="top"><{$v['datatext_copy']['renshu']}></td>
+                  <td scope="row" align="left" valign="top"><php> echo number_format($v['datatext_copy']['yingshou_copy'])</php></td>
+                  <td scope="row" align="left" valign="top"><php> echo number_format($v['datatext_copy']['yingfu_copy'])</php></td>
+                  <td scope="row" align="left" valign="top"><php> echo number_format($v['datatext_copy']['yingshou_copy'] -$v['datatext_copy']['yingfu_copy'])</php></td>
+                  <td scope="row" align="left" valign="top">
+              <input type="button" class="button" value="查看" name="button" onClick="showinfo(<{$v['datatext_copy']['chanpinID']}>);">
+                  </td>
+                </tr>
+                <php> }}</php>
+                
+                <php>if($type == '订单'){</php>
+                <tr height="20">
+                  <th scope="col" nowrap="nowrap"><div> 序号 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:200px;"><div> 团名/日期 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:80px;"><div> 审核阶段 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:80px;"><div> 成人数/儿童/领队 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:80px;"><div> 提成（元） </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:80px;"><div> 操作费（元） </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:140px;"><div> 收客人/部门 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:80px;"><div> 订单类型 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:80px;"><div> 状态 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:200px;"><div> 备注说明 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:120px;"><div> 提交时间 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:160px;"><div> 操作 </div></th>
+                </tr>
+                <php> $i = -1; foreach($chanpin_list as $v){ $i++;</php>
+                <tr height="40" class="evenListRowS1">
+                  <td scope="row" align="left" valign="top"><{$i+1}></td>
+                  <td scope="row" align="left" valign="top"><a href="<{:SITE_INDEX}>Xiaoshou/dingdanxinxi/chanpinID/<{$v['chanpinID']}>" target="_blank"><{$v['title']}></a></td>
+                  <td scope="row" align="left" valign="top"><{$v['shenhe_remark']}></td>
+                  <td scope="row" align="left" valign="top"><{$v['chengrenshu']}>/<{$v['ertongshu']}>/<{$v['lingdui_num']}></td>
+                  <td scope="row" align="left" valign="top"><{$v['ticheng']['title']}>:<{$v['ticheng']['description']}></td>
+                  <td scope="row" align="left" valign="top"><{$v['caozuofei']['description']}></td>
+                  <td scope="row" align="left" valign="top"><{$v['owner']}>/<{$v['bumen_copy']}></td>
+                  <td scope="row" align="left" valign="top"><{$v['type']}></td>
+                  <td scope="row" align="left" valign="top"><{$v['status']}></td>
+                  <td scope="row" align="left" valign="top"><{$v['remark']}></td>
+                  <td scope="row" align="left" valign="top"><php>echo date('Y/m/d H:i',$v['time']);</php></td>
+                  <td scope="row" align="left" valign="top">
+              <input type="button" class="button" value="查看" name="button" onClick="show_dingdan(<{$v['chanpinID']}>);">
+                  </td>
+                </tr>
+                <php> }}</php>
+                <tr class="pagination">
+                  <td colspan="11">
+                  <table cellpadding="0" cellspacing="0" width="100%" class="paginationTable">
+                      <tbody>
+                        <tr>
+                          <td nowrap="nowrap" align="right" class="paginationChangeButtons" style="color:#090"><{$page}></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+            
+  </div>
+</div>
+
+<tp:includeCA file="Index:footer" />
+<div id="dateitem" style=" display:none; position:absolute;">
+  <table width="150" cellspacing="0" cellpadding="1" border="0" class="olBgClass">
+    <tbody>
+      <tr>
+        <td><table width="100%" cellspacing="0" cellpadding="2" border="0" class="olOptionsFgClass">
+            <tbody>
+              <tr>
+                <td valign="top" class="olOptionsFgClass"><div class="olFontClass" id="thedate"> </div></td>
+              </tr>
+            </tbody>
+          </table></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div style="position: absolute; display:none" id="shenhediv">
+  <table cellspacing="0" cellpadding="1" border="0" class="olBgClass">
+    <tbody>
+      <tr>
+        <td><table cellspacing="0" cellpadding="0" border="0" width="100%" class="olCgClass">
+            <tbody>
+              <tr>
+                <td width="100%" class="olCgClass"><div style="float:left">审核记录</div>
+                  <div style="float: right"> <a title="关闭" href="javascript:void(0);" onClick="javascript:return div_close('shenhediv');"> <img border="0" src="<{:__PUBLIC__}>/myerp/images/close.gif" style="margin-left:2px; margin-right: 2px;"> </a> </div></td>
+              </tr>
+            </tbody>
+          </table>
+          <table cellspacing="0" cellpadding="0" border="0" width="100%" class="olFgClass">
+            <tbody id="shenhe_box">
+            </tbody>
+          </table></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<script language="javascript"> 
+
+function showinfo_item(baozhangID){
+	window.open('<{:SITE_INDEX}>Chanpin/zituanxiangmu/baozhangID/'+baozhangID);
+}
+function showinfo(baozhangID){
+	window.open('<{:SITE_INDEX}>Chanpin/zituanbaozhang/baozhangID/'+baozhangID);
+}
+function show_dingdan(chanpinID){
+	window.open('<{:SITE_INDEX}>Xiaoshou/dingdanxinxi/chanpinID/'+chanpinID);
+}
+function dosearch(str){
+	window.location = SITE_INDEX+'Caiwu/shenhe/type/<{$type}>'+str;
+}
+
+</script>
+

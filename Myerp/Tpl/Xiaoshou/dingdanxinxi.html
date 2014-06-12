@@ -1,0 +1,641 @@
+<tp:includeCA file="Index:showheader" />
+<script type="text/javascript" src="<{:__PUBLIC__}>/myerp/My97DatePicker/WdatePicker.js"></script>
+<script type='text/javascript' src='<{:__PUBLIC__}>/myerp/Xiaoshou/dingdanxinxi.js'></script>
+
+<style>
+.tb1 {
+	border-left:1px dashed #CCCCCC;
+	border-bottom:1px dashed #CCCCCC
+}
+.tb1 tr td {
+	border-top:1px dashed #CCCCCC;
+	border-right:1px dashed #CCCCCC
+}
+.anu {
+	BORDER-RIGHT-WIDTH: 0px;
+	TEXT-TRANSFORM: uppercase;
+	WIDTH: 89px;
+	DISPLAY: block;
+	BORDER-TOP-WIDTH: 0px;
+	BORDER-BOTTOM-WIDTH: 0px;
+	HEIGHT: 23px;
+	COLOR: #fff;
+	BORDER-LEFT-WIDTH: 0px;
+	BACKGROUND: url('<{:__PUBLIC__}>/gulianstyle/images/anu.gif') no-repeat left top;
+}
+.renyuanxinxi tbody tr td input { width:80px; }
+</style>
+
+<script type='text/javascript' src='<{:__PUBLIC__}>/myerp/jquery-autocomplete/jquery.autocomplete.js'></script>
+<link rel="stylesheet" type="text/css" href="<{:__PUBLIC__}>/myerp/jquery-autocomplete/jquery.autocomplete.css" />
+<script>
+
+<php>if(!$tuanyuan_has){</php>
+jQuery(window).bind('beforeunload',function(){ 
+return '请确认人员信息已经保存，确定离开此页面吗？'; 
+});
+<php>}</php>
+
+var chanpinID = '<{$chanpinID}>';
+var title =  '编号<{$chanpinID}>订单';
+var user = [
+	 <php>foreach($userlist as $v){</php>
+		  { title: "<{$v[title]}>", systemID: "<{$v['systemID']}>" },
+	 <php>}</php>
+ ];
+
+ function quxiao(id)
+ {
+	jQuery.ajax({
+		type:	"POST",
+		url:	SITE_INDEX+"Xiaoshou/quxiaodingdan",
+		data:	"dingdanID="+id,
+		success:function(msg){
+			ThinkAjax.myAjaxResponse(msg,'resultdiv_2',quxiao_after);
+		}
+	});
+	
+ }
+ 
+function quxiao_after(data,status){
+	if(status == 1){
+		jQuery(window).unbind('beforeunload');
+		window.location = SITE_INDEX+'Xiaoshou/dingdanlist';
+	}
+}
+
+
+
+
+</script>
+
+
+<div id="main">
+
+  <div id="content" style="margin-left:5px; padding-left:0px; border-left:none">
+    <div id="resultdiv" class="resultdiv"></div>
+    <div id="resultdiv_2" class="resultdiv"></div>
+    
+    
+    <div class="moduleTitle" style="margin-bottom:10px;">
+        <div style="float:left; width:70%">
+          <h3 style=""><{$navigation}><{$datatitle}></h3>
+        </div>
+        <div style="float:left; width:30%; margin-top:6px;">
+              <span style="float:right; margin-left:20px;">
+              <img src="<{:__PUBLIC__}>/myerp/images/help.gif" alt="帮助" ><a href="javascript:void(0)" onclick="alert('暂无');" class="utilsLink"> 帮助 </a> 
+              </span>
+        </div>
+    </div>
+      
+      <div class="buttons">
+      		
+            <input type="button" class="button" value="支付查询" name="button" style="float:right" id="zhifuchaxun_create">
+            <input type="button" class="button" value="审核记录" name="button" style="float:right" onclick="shenheshow_doit(<{$chanpinID}>,this);">
+          
+      <php>
+      $taskom = A("Method")->_checkOMTaskShenhe($chanpinID,'订单');
+      if(false !== $taskom){
+      if(cookie('show_action') == '批准'){
+      </php>
+      <input type="button" class="button" style="float:right" value=" <php>echo cookie('show_word');</php> " name="button" onclick="doshenhe('检出');">
+      <php>}if(cookie('show_action') == '申请'){
+      </php>
+      <input type="button" class="button" style="float:right" value=" <php>echo cookie('show_word');</php> " name="button" onclick="doshenhe('申请');">
+      <php>}}else{</php>
+      <input type="button" class="button" style="float:right" value="审核" name="button" onclick="alert('计调未申请审核！！！')" >
+      <php>}if(A("Method")->checkshenheback($chanpinID,'订单')){</php>
+      <input type="button" class="button" style="float:right" value=" 审核回退 " name="button" onclick="if(window.confirm('审核回退？')==true)shenhe_back(<{$chanpinID}>,'订单');">
+	  <php>}</php>
+          <input type="button" class="button" value=" 取消订单 " name="button" onClick="quxiao('<{$chanpinID}>');">
+          <input type="button" class="button" value=" 确认订单 " name="button" onClick="querendingdan();">
+      </div>
+      
+      
+      <table cellspacing="1" cellpadding="0" border="0" width="100%" class="edit view">
+        <tbody>
+          <tr>
+            <th align="left" colspan="8"> <h4 style="color:#090">
+            <span style="float:right; color:#000; margin-right:20px;">计调：<strong style="color:#4e8ccf;"><{$task[0][user_name]}></strong></span>
+            <span style="float:right; color:#000; margin-right:20px;">财务：<strong style="color:#4e8ccf;"><{$task[1][user_name]}></strong></span>
+            <span style="float:right; color:#000; margin-right:100px;">审核阶段：<strong style="color:#4e8ccf;"><{$dingdan['shenhe_remark']}></strong></span>
+            <span style="float:right; color:#000; margin-right:20px;">审核状态：<strong style="color:#4e8ccf;"><{$dingdan['status_shenhe']}></strong></span>
+            
+            <php>if($dingdan['orderID'] && $dingdan['orderNo']){</php>
+                <span style="float:right; color:#000; margin-right:20px;">网站订单ID：<strong style="color:#4e8ccf;"><{$dingdan['orderID']}></strong></span>
+            <php>}</php>
+            
+            </h4>
+            </th>
+          </tr>
+      </tbody>
+    </table>
+      
+      
+  <form name="form2" method="post" action="<{:SITE_INDEX}>Xiaoshou/dopostdingdanxinxi" id="form2" >
+      <input type="hidden" name="dingdanID" value="<{$chanpinID}>" />
+    <table width="100%" class="tb1" cellpadding="0" cellspacing="0">
+      <tbody>
+        <tr>
+          <td colspan="5" height="32" align="left" ><h4><img src="<{:__PUBLIC__}>/gulianstyle/images/bmbbj.gif"></img> 报名表 </h4></td>
+          <td align="right"><a href="javascript:void(0)" onclick="window.history.back();"> <img src="<{:__PUBLIC__}>/gulianstyle/styles/A_ddgl-03.jpg"> </a></td>
+        </tr>
+        <tr>
+          <td align="left" style="height: 32px"> 标题： </td>
+          <td colspan="5" style="height: 32px"><{$dingdan['title']}></td>
+        </tr>
+        <tr>
+          <td align="left" style="height: 32px; min-width:80px; width:10%"> 团号：</td>
+          <td align="left" style="height: 32px; min-width:80px; width:20%"><{$dingdan['zituanlist']['tuanhao']}></td>
+          <td align="left" style="height: 32px; min-width:80px; width:10%"> 出团日期：</td>
+          <td align="left" style="height: 32px; min-width:80px; width:20%"><{$dingdan['zituanlist']['chutuanriqi']}></td>
+          <td align="left" style="height: 32px"> 订单类型：</td>
+          <td align="left" style="height: 32px"><{$dingdan['type']}></td>
+        </tr>
+        <tr>
+          <td align="left" style="height: 32px"> 联系人：</td>
+          <td align="left" style="height: 32px">
+            <input type="text" name="lianxiren" style="width:80px;" value="<{$dingdan['lianxiren']}>" check="^\S+$" warning="联系人不能为空,且不能含有空格">
+            <input style="width:60px;" type="button" value=" 修改 " onClick="checktable()">
+          </td>
+          <td align="left" style="height: 32px"> 联系电话：</td>
+          <td align="left" style="height: 32px">
+            <input type="text" name="telnum" style="width:80px;" value="<{$dingdan['telnum']}>" check="^\S+$" warning="联系电话不能为空,且不能含有空格">
+            <input style="width:60px;" type="button" value=" 修改 " onClick="checktable()">
+          </td>
+          <td align="left" style="height: 32px"> 订单状态：</td>
+          <td align="left" style="height: 32px">
+			<input type="hidden" name="status" id="status" value="<{$dingdan['status']}>" />
+			<{$dingdan['status']}>
+          </td>
+        </tr>
+        <tr>
+          <td align="left" style="height: 32px"> 成人数：</td>
+          <td align="left" style="height: 32px"><{$dingdan['chengrenshu']}></td>
+          <td align="left" style="height: 32px"> 儿童数：</td>
+          <td align="left" style="height: 32px"><{$dingdan['ertongshu']}></td>
+          <td align="left" style="height: 32px"> 领队数：</td>
+          <td align="left" style="height: 32px"><{$dingdan['lingdui_num']}></td>
+        </tr>
+        <tr>
+          <td align="left" style="height: 32px"> 预期成人价格：</td>
+          <td align="left" style="height: 32px"><php>echo $shoujia['adultprice']</php></td>
+          <td align="left" style="height: 32px"> 预期儿童价格：</td>
+          <td align="left" style="height: 32px"><php>echo $shoujia['childprice']</php></td>
+          <td align="left" style="height: 32px"> 预期成本：</td>
+          <td align="left" style="height: 32px"><php>echo $shoujia['chengben']</php>元</td>
+        </tr>
+        <tr>
+          <td align="left" style="height: 32px"> 团费：</td>
+          <td align="left" style="height: 32px"><{$dingdan['jiage']}></td>
+          <td align="left" style="height: 32px"> 操作人：</td>
+          <td align="left" style="height: 32px"><{$dingdan['user_name']}></td>
+          <td align="left" style="height: 32px"> 折扣范围:</td>
+          <td align="left" style="height: 32px"><php>echo $shoujia['cut']</php>元</td>
+        </tr>
+        <tr>
+          <td align="left" style="height: 32px"> 备注：</td>
+          <td align="left" style="height: 32px"  colspan="5"><{$dingdan['remark']}></td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <table width="100%" class="tb1 renyuanxinxi" cellpadding="0" cellspacing="0" >
+      <tbody>
+        <tr>
+          <td colspan="20" height="32" align="left" >
+          <h4 style="float:left"><img src="<{:__PUBLIC__}>/gulianstyle/images/bmbbj.gif"></img> 审核信息 </h4> 
+          </td>
+        </tr>
+        
+        <tr>
+          <td align="left" style="height: 32px;">收客人及部门（提成）：</td>
+          <td align="left" style="height: 32px">
+            <input type="text" name="owner" id="owner" style="width:50px;" value="<{$dingdan['owner']}>" check="^\S+$" warning="所有人员姓名不能为空,且不能含有空格">
+              <select name="departmentID">
+              <php>if($dingdan['bumen_copy']){</php>
+                <option value="<{$dingdan['departmentID']}>"><{$dingdan['bumen_copy']}></option>
+                <option disabled="disabled">-----------</option>
+              <php>}</php>
+              <php>foreach($bumenfeilei as $v){</php>
+                <option value="<{$v['bumenID']}>"><{$v['title']}></option>
+              <php>}</php>
+              </select>
+            <input style="width:60px;" type="button" value=" 修改 " onClick="checktable()">
+          </td>
+          <td align="left" style="height: 32px"> 提成：</td>
+          <td align="left" style="height: 32px">
+			<select name="tichengID" id="tichengID">
+            	<php>if($dingdan['ticheng']['title']){</php>
+                <option value="<{$dingdan['ticheng']['systemID']}>"><{$dingdan['ticheng']['title']}>:<{$dingdan['ticheng']['description']}></option>
+                <option disabled="disabled">---------------</option>
+            	<php>}</php>
+          		<php>foreach($ticheng as $tiv){</php>
+                <option value="<{$tiv['systemID']}>"><{$tiv['title']}>:<{$tiv['description']}></option>
+                <php>}</php>
+			</select>
+            <input style="width:60px;" type="button" value=" 修改 " onClick="checktable()">
+          </td>
+          <td align="left" style="height: 32px"> 团队提成：</td>
+          <td align="left" style="height: 32px">
+          	<input type="text" name="tuandui_ticheng" id="tuandui_ticheng" value="<{$dingdan['tuandui_ticheng']}>"/>(直接输入金额)
+            <input style="width:60px;" type="button" value=" 修改 " onClick="checktable()">
+          </td>
+        </tr>
+        
+        <tr>
+          <td align="left" style="height: 32px; min-width:80px;"> 负责人(操作费)：</td>
+          <td align="left" style="height: 32px; min-width:80px;">
+            <input type="text" name="fuzeren" id="fuzeren" style="width:80px;" value="<{$dingdan['fuzeren']}>" check="^\S+$" warning="负责人不能为空,且不能含有空格">
+            <input style="width:60px;" type="button" value=" 修改 " onClick="checktable()">
+          </td>
+          <td align="left" style="height: 32px"> 操作费：</td>
+          <td align="left" style="height: 32px">
+			<select name="caozuofeiID" id="caozuofeiID" style="width:90px;">
+            	<php>if($dingdan['caozuofei']['title']){</php>
+                <option value="<{$dingdan['caozuofei']['caozuofeiID']}>"><{$dingdan['caozuofei']['description']}></option>
+                <option disabled="disabled">---------------</option>
+            	<php>}</php>
+          		<php>foreach($caozuofei as $czv){</php>
+                <option value="<{$czv['systemID']}>"><{$czv['description']}></option>
+                <php>}</php>
+			</select>
+            <input style="width:60px;" type="button" value=" 修改 " onClick="checktable()">
+          </td>
+          <td align="left" style="height: 32px"></td>
+          <td align="left" style="height: 32px">
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </form>
+	<br />
+  <form name="form1" method="post" id="form1" >
+      <input type="hidden" name="tuanyuanmark" value="1" />
+      <input type="hidden" name="dingdanID" value="<{$chanpinID}>" />
+      <input type="hidden" name="shoujiaID" value="<{$dingdan['shoujiaID']}>" />
+    <table width="100%" class="tb1 renyuanxinxi" cellpadding="0" cellspacing="0" >
+      <tbody>
+        <tr>
+          <td colspan="20" height="32" align="left" >
+          <h4 style="float:left"><img src="<{:__PUBLIC__}>/gulianstyle/images/bmbbj.gif"></img> 人员信息 </h4> 
+          </td>
+        </tr>
+        
+	<php>if($dingdan['zituanlist']['guojing_copy'] == '国内'){</php> 
+        <tr>
+          <td align="left" style="height: 32px"> 姓名： </td>
+          <td align="left" style="height: 32px"> 类型： </td>
+          <td align="left" style="height: 32px"> 性别： </td>
+          <td align="left" style="height: 32px"> 手机： </td>
+          <td align="left" style="height: 32px"> 证件类型： </td>
+          <td align="left" style="height: 32px"> 证件号码： </td>
+          <td align="left" style="height: 32px"> 应付： </td>
+          <td align="left" style="height: 32px; min-width:80px;"> 备注： </td>
+          <td align="left" style="height: 32px; min-width:180px;"> 付款状态/付款确认 </td>
+          <td align="left" style="height: 32px; min-width:60px;"> 客户类型 </td>
+          <td align="left" style="height: 32px; min-width:60px;"> 详细资料： </td>
+          <td align="left" style="height: 32px; min-width:180px;"> 操作： </td>
+        </tr>
+       <php>$i = 0; foreach($tuanyuan as $vo){$i++;</php>
+       <input type="hidden" name="tuanyuanID<{$i}>" value="<{$vo['id']}>" />
+       <input type="hidden" name="datatext<{$i}>" value="<{$vo['datatext']}>" />
+        <tr>
+          <td align="left" style="height: 32px"><input type="text" name="name<{$i}>" value="<{$vo['name']}>" check="^\S+$" warning="所有人员姓名不能为空,且不能含有空格"></td>
+          <td align="left" style="height: 32px"><input type="hidden" name="manorchild<{$i}>" value="<{$vo['manorchild']}>" /><{$vo['manorchild']}></td>
+          <td align="left" style="height: 32px">
+          <select name="sex<{$i}>">
+       <php>if($vo['sex']){</php>
+          <option value="<{$vo['sex']}>"><{$vo['sex']}></option>
+          <option disabled="disabled">----------------</option>
+       <php>}</php>
+          <option value="男">男</option>
+          <option value="女">女</option>
+          </select>
+          </td>
+          <td align="left" style="height: 32px"><input name="telnum<{$i}>" type="text" value="<{$vo['telnum']}>" check="^1[3458]\d{9}$" warning="所有人员电话号码不能为空,且必须为手机号"></td>
+          <td align="left" style="height: 32px">
+          <select name="zhengjiantype<{$i}>">
+       <php>if($vo['zhengjiantype']){</php>
+          <option value="<{$vo['zhengjiantype']}>"><{$vo['zhengjiantype']}></option>
+          <option disabled="disabled">----------------</option>
+       <php>}</php>
+          <option value="身份证">身份证</option>
+          <option value="护照">护照</option>
+          <option value="通行证">通行证</option>
+          </select>
+          </td>
+          <td align="left" style="height: 32px"><input name="zhengjianhaoma<{$i}>" type="text" value="<{$vo['zhengjianhaoma']}>"></td>
+          <td align="left" style="height: 32px"><input name="price<{$i}>" type="text" value="<{$vo['price']}>" check="^\S+$" warning="价格不能为空,且不能含有空格"></td>
+          <td align="left" style="height: 32px"><input name="remark<{$i}>" type="text" value="<{$vo['remark']}>"></td>
+          <td align="left" style="height: 32px">
+          <strong><{$vo['ispay']}></strong>/
+          <select name="pay_method<{$i}>">
+          	<php>if($vo['pay_method']){</php>
+              <option style="width:50px;" value="<{$vo['pay_method']}>"><{$vo['pay_method']}></option>
+              <option disabled="disabled">--------</option>
+          	<php>}</php>
+              <option value="现金">现金</option>
+              <option value="网拨">网拨</option>
+              <option value="银行卡">银行卡</option>
+              <option value="汇款">汇款</option>
+              <option value="转账">转账</option>
+              <option value="支票">支票</option>
+              <option value="签单">签单</option>
+              <option value="对冲">对冲</option>
+              <option value="月结">月结</option>
+              <option value="VIP贵宾卡">VIP贵宾卡</option>
+              <option value="抵值券">抵值券</option>
+            </select>
+           <input type="hidden" name="ispay<{$i}>" id="ispay<{$vo[id]}>" <php>if(!$vo['ispay']){</php> value="未付款" <php>}</php> value="<{$vo['ispay']}>"/>
+            <input style="width:60px;" type="button" value=" 确认 " onclick="dofukuan(<{$vo[id]}>)">
+          </td>
+          <td align="left" style="height: 32px"><input type="hidden" name="is_leader<{$i}>" id="is_leader<{$vo[id]}>" value="<{$vo['is_leader']}>"><php>if($vo['is_leader'] == '领队') echo '领队';else{if($vo[laokehu] == 0) echo '新客户' ;else echo '老客户';}</php></td>
+          <td align="left" style="height: 32px">
+          <php>if($vo['id']){</php>
+          <a href="javascript:TravelerDetail(<{$vo['id']}>)">查看</a>
+          <php>}else{</php>
+          <a href="javascript:TravelerDetail('')">查看</a>
+          <php>}</php>
+          </td>
+          <td align="left" style="height: 32px">
+            <input type="button" class="button" value="领队/团员" name="button" onclick="if(window.confirm('确定设置？')==true)lingduiortuanyuan(<{$vo['id']}>);">
+            <input type="button" class="button" value="取消参团" name="button" onclick="if(window.confirm('确定取消？')==true)quxiaocantuan(<{$vo['id']}>);">
+          </td>
+        </tr>
+        <php>}</php>
+	<php>}</php>
+        
+        
+	<php>if($dingdan['zituanlist']['guojing_copy'] == '境外'){</php> 
+        <tr>
+          <td align="left" style="height: 32px"> 姓名： </td>
+          <td align="left" style="height: 32px"> 拼音： </td>
+          <td align="left" style="height: 32px"> 类型： </td>
+          <td align="left" style="height: 32px"> 性别： </td>
+          <td align="left" style="height: 32px"> 手机： </td>
+          <td align="left" style="height: 32px"> 证件类型： </td>
+          <td align="left" style="height: 32px"> 证件号码： </td>
+          <td align="left" style="height: 32px"> 生日： </td>
+          <td align="left" style="height: 32px"> 户籍地： </td>
+          <td align="left" style="height: 32px"> 证件有效期： </td>
+          <td align="left" style="height: 32px"> 应付： </td>
+          <td align="left" style="height: 32px; min-width:80px;"> 备注： </td>
+          <td align="left" style="height: 32px; min-width:180px;"> 付款状态/付款确认 </td>
+          <td align="left" style="height: 32px; min-width:60px;"> 客户类型 </td>
+          <td align="left" style="height: 32px; min-width:60px;"> 详细资料： </td>
+          <td align="left" style="height: 32px; min-width:180px;"> 操作： </td>
+        </tr>
+       <php>$i = 0; foreach($tuanyuan as $vo){$i++;</php>
+       <input type="hidden" name="tuanyuanID<{$i}>" value="<{$vo['id']}>" />
+       <input type="hidden" name="datatext<{$i}>" value="<{$vo['datatext']}>" />
+        <tr>
+          <td align="left" style="height: 32px"><input type="text" name="name<{$i}>" value="<{$vo['name']}>" check="^\S+$" warning="所有人员姓名不能为空,且不能含有空格"></td>
+          <td align="left" style="height: 32px"><input type="text" name="pinyin<{$i}>" value="<{$vo[datatext]['pinyin']}>"></td>
+          <td align="left" style="height: 32px"><input type="hidden" name="manorchild<{$i}>" value="<{$vo['manorchild']}>" /><{$vo['manorchild']}></td>
+          <td align="left" style="height: 32px">
+          <select name="sex<{$i}>">
+       <php>if($vo['sex']){</php>
+          <option value="<{$vo['sex']}>"><{$vo['sex']}></option>
+          <option disabled="disabled">----------------</option>
+       <php>}</php>
+          <option value="男">男</option>
+          <option value="女">女</option>
+          </select>
+          </td>
+          <td align="left" style="height: 32px"><input name="telnum<{$i}>" type="text" value="<{$vo['telnum']}>" check="^1[3458]\d{9}$" warning="所有人员电话号码不能为空,且必须为手机号"></td>
+          <td align="left" style="height: 32px">
+          <select name="zhengjiantype<{$i}>">
+       <php>if($vo['zhengjiantype']){</php>
+          <option value="<{$vo['zhengjiantype']}>"><{$vo['zhengjiantype']}></option>
+          <option disabled="disabled">----------------</option>
+       <php>}</php>
+          <option value="护照">护照</option>
+          <option value="通行证">通行证</option>
+          <option value="身份证">身份证</option>
+          </select>
+          </td>
+          <td align="left" style="height: 32px"><input name="zhengjianhaoma<{$i}>" type="text" value="<{$vo['zhengjianhaoma']}>"></td>
+          <td align="left" style="height: 32px"><input name="chushengriqi<{$i}>" type="text" class="Wdate" onfocus="WdatePicker()" value="<{$vo['datatext']['chushengriqi']}>"></td>
+          <td align="left" style="height: 32px"><input name="hujidi<{$i}>" type="text" value="<{$vo['datatext']['hujidi']}>" ></td>
+          <td align="left" style="height: 32px"><input name="zhengjianyouxiaoqi<{$i}>" type="text" class="Wdate" onfocus="WdatePicker()" value="<{$vo['datatext']['zhengjianyouxiaoqi']}>"></td>
+          <td align="left" style="height: 32px"><input name="price<{$i}>" type="text" value="<{$vo['price']}>" check="^\S+$" warning="价格不能为空,且不能含有空格"></td>
+          <td align="left" style="height: 32px"><input name="remark<{$i}>" type="text" value="<{$vo['remark']}>"></td>
+          <td align="left" style="height: 32px">
+          <strong><{$vo['ispay']}></strong>/
+          <select name="pay_method<{$i}>">
+          	<php>if($vo['pay_method']){</php>
+              <option style="width:50px;" value="<{$vo['pay_method']}>"><{$vo['pay_method']}></option>
+              <option disabled="disabled">--------</option>
+          	<php>}</php>
+              <option value="现金">现金</option>
+              <option value="网拨">网拨</option>
+              <option value="银行卡">银行卡</option>
+              <option value="汇款">汇款</option>
+              <option value="转账">转账</option>
+              <option value="支票">支票</option>
+              <option value="签单">签单</option>
+              <option value="对冲">对冲</option>
+              <option value="月结">月结</option>
+              <option value="VIP贵宾卡">VIP贵宾卡</option>
+              <option value="抵值券">抵值券</option>
+            </select>
+           <input type="hidden" name="ispay<{$i}>" id="ispay<{$vo[id]}>" <php>if(!$vo['ispay']){</php> value="未付款" <php>}</php> value="<{$vo['ispay']}>"/>
+            <input style="width:60px;" type="button" value=" 确认 " onclick="dofukuan(<{$vo[id]}>)">
+          </td>
+          <td align="left" style="height: 32px"><input type="hidden" name="is_leader<{$i}>" id="is_leader<{$vo[id]}>" value="<{$vo['is_leader']}>"><php>if($vo['is_leader'] == '领队') echo '领队';else{if($vo[laokehu] == 0) echo '新客户' ;else echo '老客户';}</php></td>
+          <td align="left" style="height: 32px">
+          <php>if($vo['id']){</php>
+          <a href="javascript:TravelerDetail(<{$vo['id']}>)">查看</a>
+          <php>}else{</php>
+          <a href="javascript:TravelerDetail('')">查看</a>
+          <php>}</php>
+          </td>
+          <td align="left" style="height: 32px">
+            <input type="button" class="button" value="领队/团员" name="button" onclick="if(window.confirm('确定设置？')==true)lingduiortuanyuan(<{$vo['id']}>);">
+            <input type="button" class="button" value="取消参团" name="button" onclick="if(window.confirm('确定取消？')==true)quxiaocantuan(<{$vo['id']}>);">
+          </td>
+        </tr>
+        <php>}</php>
+	<php>}</php>
+        
+        <tr>
+          <td colspan="20" height="32" align="center" ><strong style="color:red">人员信息填写后，请点击保存</strong>
+          <input style="width:60px;" type="button" value=" 保存 " onClick="if(CheckForm('form1','resultdiv_2'))save();">
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </form>
+        
+    <table width="100%" class="tb1 renyuanxinxi" cellpadding="0" cellspacing="0" >
+      <tbody>
+        <tr style="background-color:#4E8CCF; color:white">
+          <td colspan="20" height="32" align="left" >
+          <h4 style="float:left;color:white"><img src="<{:__PUBLIC__}>/gulianstyle/images/bmbbj.gif"></img> 订单备忘  <input style="width:60px;" type="button" value=" 添加 " id="remark_create" ></h4> 
+          </td>
+        </tr>
+        <tr>
+          <td align="left" style="height: 32px; width:10%;"> 操作人： </td>
+          <td align="left" style="height: 32px; width:50%;"> 内容： </td>
+          <td align="left" style="height: 32px; width:10%;"> 时间： </td>
+        </tr>
+        <php>foreach($remarkall as $v){</php>
+        <tr>
+          <td align="left" style="height: 32px"><{$v['user_name']}>
+          </td>
+          <td align="left" style="height: 32px"><{$v['content']}>
+          </td>
+          <td align="left" style="height: 32px"><php>echo date('Y-m-d H:i',$v['time'])</php>
+          </td>
+        <php>}</php>
+        </tr>
+      </tbody>
+    </table>
+   
+            
+  </div>
+</div>
+
+
+<tp:includeCA file="Index:footer" />
+<div style="position: absolute; display:none" id="shenhediv">
+  <table cellspacing="0" cellpadding="1" border="0" class="olBgClass">
+    <tbody>
+      <tr>
+        <td><table cellspacing="0" cellpadding="0" border="0" width="100%" class="olCgClass">
+            <tbody>
+              <tr>
+                <td width="100%" class="olCgClass"><div style="float:left">审核记录</div>
+                  <div style="float: right"> <a title="关闭" href="javascript:void(0);" onClick="javascript:return div_close('shenhediv');"> <img border="0" src="<{:__PUBLIC__}>/myerp/images/close.gif" style="margin-left:2px; margin-right: 2px;"> </a> </div></td>
+              </tr>
+            </tbody>
+          </table>
+          <table cellspacing="0" cellpadding="0" border="0" width="100%" class="olFgClass">
+            <tbody id="shenhe_box">
+            </tbody>
+          </table></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+
+
+<div id="dialog_remark" title="编辑内容" style="background:#FFF">
+<form id="form_remark" id="form_remark" method="post" >
+<input type="hidden" id="remarkID" name="id" />
+<input type="hidden" name="dataID" value="<{$chanpinID}>" />
+<input type="hidden" name="datatype" value="订单" />
+    <table cellspacing="1" cellpadding="0" border="0" width="100%" class="edit view">
+      <tbody>
+        <tr>
+          <td valign="top" scope="row" style="width:80px;"> 备注说明: </td>
+          <td valign="top" scope="row"><textarea name="content" rows="4" style="width:100%"></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+</form>
+</div>
+
+<div id="dialog_zhifuchaxun" title="支付查询" style="background:#FFF">
+    <table cellspacing="1" cellpadding="0" border="0" width="100%" class="edit view">
+      <tbody>
+        <tr>
+          <td valign="top" scope="row" style="width:80px;"> 查询结果: </td>
+          <td valign="top" scope="row" id="chaxunjieguo"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+
+
+<script language="javascript"> 
+var orderNo =  '<{$dingdan[orderNo]}>';
+
+jQuery(document).ready(function(){
+	// Dialog
+	jQuery('#dialog_remark').dialog({
+		autoOpen: false,
+		width: 600,
+		buttons: {
+			"确认": function() {
+				if(CheckForm('form_remark','resultdiv_2'))
+				ThinkAjax.sendForm('form_remark','<{:SITE_INDEX}>Xiaoshou/dopost_dataremark',save_after,'resultdiv');
+			},
+			"取消": function() {
+				jQuery(this).dialog("close");
+			}
+		}
+	});
+	// Dialog Link
+	jQuery('#remark_create').click(function(){
+		jQuery('#dialog_remark').dialog('open');
+		return false;
+	});
+	
+	// Dialog
+	jQuery('#dialog_zhifuchaxun').dialog({
+		autoOpen: false,
+		width: 600,
+		buttons: {
+			"确认": function() {
+				
+			},
+			"取消": function() {
+				jQuery(this).dialog("close");
+			}
+		}
+	});
+	// Dialog Link
+	jQuery('#zhifuchaxun_create').click(function(){
+		ThinkAjax.sendForm('form_remark','<{:SITE_INDEX}>Xiaoshou/zhifuchaxun/orderNo/'+orderNo,dingdanchaxun_after,'resultdiv');
+		return false;
+	});
+	
+});
+
+
+function save_after(data,status){
+	if(status == 1)
+	location.reload();
+}
+	
+function dingdanchaxun_after(data,status){
+	if(data.error == 'true'){
+		jQuery('#chaxunjieguo').html(data.msg); 
+	}
+	else{
+		msg = '<strong>已支付</strong>:'+data.zhifu+'<br>';
+		msg += '<strong>时间</strong>:'+data.shijian+'<br>';
+		msg += '<strong>描述</strong>:'+data.miaoshu+'<br>';
+		msg += '<strong>产品地址</strong>:'+data.url+'<br>';
+		for(i=0;i<data.itemcount;i++){
+			msg += '<strong>项目</strong>:'+data.list[i]['ProductName']+'<br>';
+			msg += '<strong>数量</strong>:'+data.list[i]['Qty']+'<br>';
+			msg += '<strong>单价</strong>:'+data.list[i]['UnitPrice']+'<br>';
+		}
+		jQuery('#chaxunjieguo').html(msg); 
+	}
+	jQuery('#dialog_zhifuchaxun').dialog('open');
+}
+	
+</script> 
+
+
+
+
+
+
+
+
+
+

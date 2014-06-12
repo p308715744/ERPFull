@@ -1,0 +1,388 @@
+<tp:includeCA file="Index:showheader" />
+
+<div id="main">
+  <div id="content" style="margin-left:0;">
+            <div id="resultdiv" class="resultdiv"></div>
+            <div id="resultdiv_2" class="resultdiv"></div>
+      <php>if( $nowDir['title'] == '用户' || $nowDir['title'] == '系统管理'){</php>
+    <table cellspacing="0" cellpadding="0" width="100%" class="h3Row" style="margin-top:0px;">
+      <tbody>
+      <php>if( $nowDir['title'] == '用户'){</php>
+      	<tr><td width="20%" valign="bottom"><h3><{$navigation}></h3></td></tr>
+        <tr><td style="padding-top: 3px; padding-bottom: 5px;"><{$nowDir['remark']}></td></tr>
+      <php>}else{</php>
+      	<tr><td width="20%" valign="bottom"><h3>用户</h3></td></tr>
+        <tr><td style="padding-top: 3px; padding-bottom: 5px;">在系统中创建，编辑，激活和取消激活用户. 创建和管理团队和角色, 包括模块-字段-访问水平.</td></tr>
+      <php>}</php>
+      </tbody>
+    </table>
+    <table class="other view">
+      <tbody>
+        <tr>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/Users.gif">&nbsp;<a href="<{:SITE_INDEX}>SetSystem/systemUser">用户管理</a></td>
+          <td width="30%">管理用户账号,密码等信息</td>
+        </tr>
+      </tbody>
+    </table>
+      <php>}</php>
+      
+      
+      <php>if( $nowDir['title'] == '系统工具' || $nowDir['title'] == '系统管理'){</php>
+    <table cellspacing="0" cellpadding="0" width="100%" class="h3Row" style="margin-top:0px;">
+      <tbody>
+      <php>if( $nowDir['title'] == '系统工具'){</php>
+      	<tr><td width="20%" valign="bottom"><h3><{$navigation}></h3></td></tr>
+        <tr><td style="padding-top: 3px; padding-bottom: 5px;"><{$nowDir['remark']}></td></tr>
+      <php>}else{</php>
+      	<tr><td width="20%" valign="bottom"><h3>系统工具</h3></td></tr>
+        <tr><td style="padding-top: 3px; padding-bottom: 5px;">获取文档和执行管理员操作.</td></tr>
+      <php>}</php>
+      </tbody>
+    </table>
+    <table class="other view">
+      <tbody>
+        <tr>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/Administration.gif">&nbsp;<a href="<{:SITE_INDEX}>SetSystem/">数据开放权限查询</a></td>
+          <td width="30%">数据开放权限查询</td>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/Backups.gif">&nbsp;<a href="javascript:void(0)" id="shenhe_create">产品审核重置</a></td>
+          <td width="30%">检查产品审核状态，重置产品属性。</td>
+        </tr>
+        <tr>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/Administration.gif">&nbsp;<a href="javascript:void(0)" id="resetOM_create">重置产品OM</a></td>
+          <td width="30%">指定产品ID,重置OM(报账及子团统一重置线路或地接团)</td>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/Administration.gif">&nbsp;<a href="javascript:void(0)" id="resetOMTask_create">重置产品待审核OM</a></td>
+          <td width="30%">指定产品ID,重置该产品待审核OM</td>
+        </tr>
+      </tbody>
+    </table>
+      <php>}</php>
+      
+      
+      <php>if( $nowDir['title'] == '系统设置' || $nowDir['title'] == '系统管理'){</php>
+    <table cellspacing="0" cellpadding="0" width="100%" class="h3Row" style="margin-top:0px;">
+      <tbody>
+      <php>if( $nowDir['title'] == '系统设置'){</php>
+      	<tr><td width="20%" valign="bottom"><h3><{$navigation}></h3></td></tr>
+        <tr><td style="padding-top: 3px; padding-bottom: 5px;"><{$nowDir['remark']}></td></tr>
+      <php>}else{</php>
+      	<tr><td width="20%" valign="bottom"><h3>系统设置</h3></td></tr>
+        <tr><td style="padding-top: 3px; padding-bottom: 5px;">配置系统-按照您组织机构的特殊性. 用户能添加和废弃一些本地设置在他们的操作页面.</td></tr>
+      <php>}</php>
+      </tbody>
+    </table>
+    <table class="other view">
+      <tbody>
+        <tr>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/icon_AdminThemes.gif">&nbsp;<a href="<{:SITE_INDEX}>SetSystem/category">分类</a></td>
+          <td width="30%">将分类进行统一操作</td>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/icon_ProductCategories_32.gif">&nbsp;<a href="<{:SITE_INDEX}>SetSystem/systemOM">数据开放与管理</a></td>
+          <td width="30%">管理产品等数据的开放对象和管理对象</td>
+        </tr>
+        <tr>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/Accounts.gif">&nbsp;<a href="<{:SITE_INDEX}>SetSystem/directory">目录设置</a></td>
+          <td width="30%">目录导航</td>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/icon_Layouts.gif">&nbsp;<a href="<{:SITE_INDEX}>SetSystem/shenhe">审核流程</a></td>
+          <td width="30%">设置报表和产品的审核流程</td>
+        </tr>
+        <tr>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/sugar_icon.ico">&nbsp;<a href="<{:SITE_INDEX}>SetSystem/dataDictionary">数据字典</a></td>
+          <td width="30%">数据字典</td>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/WorkFlow.gif">&nbsp;<a target="_blank" href="<{:ET_URL}>rbac.php">RBAC设置</a></td>
+          <td width="30%">角色权限这是</td>
+        </tr>
+        <tr>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/ProductTypes.gif">&nbsp;<a href="<{:SITE_INDEX}>SetSystem/department">部门设置</a></td>
+          <td width="30%">部门设置</td>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/ACLRoles.gif">&nbsp;<a href="<{:SITE_INDEX}>SetSystem/roles">角色设置</a></td>
+          <td width="30%">角色设置</td>
+        </tr>
+      </tbody>
+    </table>
+      <php>}</php>
+      
+      
+      <php>if( $nowDir['title'] == '产品平移' || $nowDir['title'] == '系统管理'){</php>
+    <table cellspacing="0" cellpadding="0" width="100%" class="h3Row" style="margin-top:0px;">
+      <tbody>
+      <php>if( $nowDir['title'] == '产品平移'){</php>
+      	<tr><td width="20%" valign="bottom"><h3><{$navigation}></h3></td></tr>
+        <tr><td style="padding-top: 3px; padding-bottom: 5px;"><{$nowDir['remark']}></td></tr>
+      <php>}else{</php>
+      	<tr><td width="20%" valign="bottom"><h3>产品平移</h3></td></tr>
+        <tr><td style="padding-top: 3px; padding-bottom: 5px;">公告广播排团表等信息.</td></tr>
+      <php>}</php>
+      </tbody>
+    </table>
+    <table class="other view">
+      <tbody>
+        <tr>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/Backups.gif">&nbsp;<a href="javascript:void(0)" id="pingyi_create">产品平移</a></td>
+          <td width="30%">产品平移</td>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/icon_email_check.gif">&nbsp;<a href="#" onclick="if(window.confirm('确认重置？')==true)resetOM('联合体')">联合体OM重置</a></td>
+          <td width="30%">联合体OM重置</td>
+        </tr>
+        </tr>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/icon_email_check.gif">&nbsp;<a href="#" onclick="if(window.confirm('确认？')==true)resetchanpinshoujia()">产品开放到部门</a></td>
+          <td width="30%">产品开放到部门</td>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/icon_email_check.gif">&nbsp;<a href="#" onclick="if(window.confirm('确认重置？')==true)resetOM('全部')">全部产品OM重置</a></td>
+          <td width="30%">联合体OM重置</td>
+        </tr>
+      </tbody>
+    </table>
+      <php>}</php>
+      
+      
+      <php>if( $nowDir['title'] == '设置与管理' || $nowDir['title'] == '系统管理'){</php>
+    <table cellspacing="0" cellpadding="0" width="100%" class="h3Row" style="margin-top:0px;">
+      <tbody>
+      <php>if( $nowDir['title'] == '设置与管理'){</php>
+      	<tr><td width="20%" valign="bottom"><h3><{$navigation}></h3></td></tr>
+        <tr><td style="padding-top: 3px; padding-bottom: 5px;"><{$nowDir['remark']}></td></tr>
+      <php>}else{</php>
+      	<tr><td width="20%" valign="bottom"><h3>设置与管理</h3></td></tr>
+        <tr><td style="padding-top: 3px; padding-bottom: 5px;">配置系统-按照您组织机构的特殊性. 用户能添加和废弃一些本地设置在他们的操作页面.</td></tr>
+      <php>}</php>
+      </tbody>
+    </table>
+    <table class="other view">
+      <tbody>
+        <tr>
+          <td width="20%" scope="row"><img border="0" width="16" height="16" align="absmiddle" src="<{:__PUBLIC__}>/myerp/images/Users.gif">&nbsp;<a href="<{:SITE_INDEX}>SetSystem/systemUser">用户管理</a></td>
+          <td width="30%">管理用户账号,密码等信息</td>
+        </tr>
+      </tbody>
+    </table>
+      <php>}</php>
+    
+    
+      
+      
+      
+  </div>
+</div>
+<tp:includeCA file="Index:footer" />
+<script type='text/javascript' src='<{:__PUBLIC__}>/myerp/jquery-autocomplete/jquery.autocomplete.js'></script>
+<link rel="stylesheet" type="text/css" href="<{:__PUBLIC__}>/myerp/jquery-autocomplete/jquery.autocomplete.css" />
+<script>
+jQuery(document).ready(function(){
+	// Dialog
+	jQuery('#dialog_pingyi').dialog({
+		autoOpen: false,
+		width: 300,
+		buttons: {
+			"确认": function() {
+				if(CheckForm('form_pingyi','resultdiv_2')){
+						ThinkAjax.sendForm('form_pingyi',SITE_INDEX+'SetSystem/dopost_chanpinpingyi','','resultdiv');
+				}
+			},
+			"取消": function() {
+				jQuery(this).dialog("close");
+			}
+		}
+	});
+	// Dialog Link
+	jQuery('#pingyi_create').click(function(){
+		jQuery('#dialog_pingyi').dialog('open');
+		return false;
+	});
+	// Dialog
+	jQuery('#dialog_shenhe').dialog({
+		autoOpen: false,
+		width: 300,
+		buttons: {
+			"确认": function() {
+				if(CheckForm('form_shenhe','resultdiv_2')){
+						ThinkAjax.sendForm('form_shenhe',SITE_INDEX+'SetSystem/chanpin_resetbyshenhetask','','resultdiv');
+				}
+			},
+			"取消": function() {
+				jQuery(this).dialog("close");
+			}
+		}
+	});
+	// Dialog Link
+	jQuery('#shenhe_create').click(function(){
+		jQuery('#shenhe_title').html("产品审核重置"); 
+		jQuery('#dialog_shenhe').dialog('open');
+		return false;
+	});
+	// Dialog
+	jQuery('#dialog_resetOM').dialog({
+		autoOpen: false,
+		width: 300,
+		buttons: {
+			"确认": function() {
+				if(CheckForm('form_resetOM','resultdiv_2')){
+						ThinkAjax.sendForm('form_resetOM',SITE_INDEX+'Chanpin/resetOM','','resultdiv');
+				}
+			},
+			"取消": function() {
+				jQuery(this).dialog("close");
+			}
+		}
+	});
+	// Dialog Link
+	jQuery('#resetOM_create').click(function(){
+		jQuery('#dialog_resetOM').dialog('open');
+		return false;
+	});
+	
+	
+	// Dialog
+	jQuery('#dialog_resetOMTask').dialog({
+		autoOpen: false,
+		width: 300,
+		buttons: {
+			"确认": function() {
+				if(CheckForm('form_resetOMTask','resultdiv_2')){
+						ThinkAjax.sendForm('form_resetOMTask',SITE_INDEX+'SetSystem/resetOMTask','','resultdiv');
+				}
+			},
+			"取消": function() {
+				jQuery(this).dialog("close");
+			}
+		}
+	});
+	// Dialog Link
+	jQuery('#resetOMTask_create').click(function(){
+		jQuery('#dialog_resetOMTask').dialog('open');
+		return false;
+	});
+	
+	
+	
+	
+});
+
+var user = [
+	 <php>foreach($userlist as $v){</php>
+		  { title: "<{$v[title]}>", systemID: "<{$v['systemID']}>" },
+	 <php>}</php>
+ ];
+var bumen = [
+	 <php>foreach($bumenlist as $v){</php>
+		  { title: "<{$v[title]}>", systemID: "<{$v['systemID']}>" },
+	 <php>}</php>
+ ];
+
+jQuery().ready(function() {
+	  myautocomplete("#username_pingyi",'用户');
+	  myautocomplete("#bumentitle_pingyi",'部门');
+});
+		
+function myautocomplete(target,parenttype){
+		if(parenttype == '用户')
+		datas = user;
+		if(parenttype == '部门')
+		datas = bumen;
+		jQuery(target).unautocomplete().autocomplete(datas, {
+		   max: 50,    //列表里的条目数
+		   minChars: 0,    //自动完成激活之前填入的最小字符
+		   width: 150,     //提示的宽度，溢出隐藏
+		   scroll:false,
+		   matchContains: true,    //包含匹配，就是data参数里的数据，是否只要包含文本框里的数据就显示
+		   autoFill: true,    //自动填充
+		   formatItem: function(data, i, num) {//多选显示
+			   return data.title;
+		   },
+		   formatMatch: function(data, i, num) {//匹配格式
+			   return data.title;
+		   },
+		   formatResult: function(data) {//选定显示
+			   return data.title;
+		   }
+		})
+}
+
+function resetOM(type){
+	var url = SITE_INDEX+'SetSystem/resetOM/type/'+type+'/page/1/page_2/1';
+    window.open(url,'_blank');
+}
+
+function resetchanpinshoujia(){
+	var url = SITE_INDEX+'SetSystem/chanpinkaifangdaobumen';
+    window.open(url,'_blank');
+}
+
+
+
+</script>
+
+
+<div id="dialog_pingyi" title="产品平移" style="background:#FFF">
+<form id="form_pingyi" id="form_pingyi" method="post" >
+    <table cellspacing="1" cellpadding="0" border="0" width="100%" class="edit view">
+      <tbody>
+        <tr>
+          <td valign="top" scope="row" style="width:80px;"> 产品ID: </td>
+          <td valign="top" scope="row"><input name="chanpinID" type="text" id="chanpinID_pingyi" check="^\S+$" warning="产品ID不能为空,且不能含有空格" ></td>
+        </tr>
+        <tr>
+          <td valign="top" scope="row" style="width:80px;"> 用户名: </td>
+          <td valign="top" scope="row"><input name="username" type="text" id="username_pingyi" check="^\S+$" warning="用户名不能为空,且不能含有空格"></td>
+        </tr>
+        <tr>
+          <td valign="top" scope="row" style="width:80px;"> 部门名: </td>
+          <td valign="top" scope="row" colspan="3"><input name="bumentitle" type="text" id="bumentitle_pingyi" check="^\S+$" warning="部门名不能为空,且不能含有空格"></td>
+        </tr>
+      </tbody>
+    </table>
+</form>
+</div>
+
+<div id="dialog_shenhe" title="" style="background:#FFF">
+<form id="form_shenhe" id="form_shenhe" method="post" >
+    <table cellspacing="1" cellpadding="0" border="0" width="100%" class="edit view">
+      <tbody>
+        <tr>
+          <td valign="top" scope="row" style="width:80px; color:blue" id="shenhe_title">  </td>
+        </tr>
+        <tr>
+          <td valign="top" scope="row" style="width:80px;"> 产品ID: </td>
+          <td valign="top" scope="row"><input name="chanpinID" type="text" id="chanpinID_shenhe" check="^\S+$" warning="产品ID不能为空,且不能含有空格" ></td>
+        </tr>
+        <tr>
+          <td valign="top" scope="row" style="width:80px;"> 产品类型: </td>
+          <td valign="top" scope="row">
+          <select name="datatype" id="chanpin_type">
+          	<option value="线路">线路</option>
+          	<option value="子团">子团</option>
+          	<option value="报账单">报账单</option>
+          	<option value="报账项">报账项</option>
+          	<option value="签证">签证</option>
+          	<option value="地接">地接</option>
+          	<option value="订单">订单</option>
+          </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</form>
+</div>
+
+<div id="dialog_resetOM" title="重置产品OM" style="background:#FFF">
+<form id="form_resetOM" id="form_resetOM" method="post" >
+    <table cellspacing="1" cellpadding="0" border="0" width="100%" class="edit view">
+      <tbody>
+        <tr>
+          <td valign="top" scope="row" style="width:80px;"> 产品ID: </td>
+          <td valign="top" scope="row"><input name="chanpinID" type="text" id="chanpinID_shenhe" check="^\S+$" warning="产品ID不能为空,且不能含有空格" ></td>
+        </tr>
+      </tbody>
+    </table>
+</form>
+</div>
+
+<div id="dialog_resetOMTask" title="重置产品待审核OM" style="background:#FFF">
+<form id="form_resetOMTask" id="form_resetOMTask" method="post" >
+    <table cellspacing="1" cellpadding="0" border="0" width="100%" class="edit view">
+      <tbody>
+        <tr>
+          <td valign="top" scope="row" style="width:80px;"> 产品ID: </td>
+          <td valign="top" scope="row"><input name="chanpinID" type="text" id="chanpinID_shenhe" check="^\S+$" warning="产品ID不能为空,且不能含有空格" ></td>
+        </tr>
+      </tbody>
+    </table>
+</form>
+</div>
+

@@ -1,0 +1,150 @@
+<tp:includeCA file="Index:showheader" />
+<script type="text/javascript" src="<{:__PUBLIC__}>/myerp/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="<{:__PUBLIC__}>/myerp/ckfinder/ckfinder.js"></script>
+<div id="main">
+
+  <div id="content" style="margin-left:5px; padding-left:0px; border-left:none">
+  
+    <tp:includeCA file="Chanpin:header_chanpin" />
+   
+<form name="form" method="post" id="form" action="<{:SITE_INDEX}>Chanpin/dopostxingcheng/">
+  <input type="hidden" name="ajax" value="1"> <!--ajax提示-->
+  <input type="hidden" name="tianshu" value="<{$chanpin['xianlu']['tianshu']}>"> 
+  <input type="hidden" name="parentID" value="<{$chanpin['chanpinID']}>"> 
+    
+    
+    <table cellspacing="1" cellpadding="0" border="0" width="100%" class="edit view">
+      <tbody>
+          <tr>
+            <th align="left" colspan="8"> <h4>行程信息（一）</h4>
+            </th>
+          </tr>
+        <tr>
+          <td valign="top" colspan="4" scope="row">
+            <table cellspacing="0" cellpadding="0" border="0" width="100%">
+              <tbody>
+                <tr>
+                  <td valign="top">
+                        <fieldset style="border:#CBDAE6 1px solid">
+                          <legend>内容</legend>
+                          <table cellspacing="1" cellpadding="0" border="0" width="100%" class="edit">
+                            <tbody>
+                              <tr>
+            <td valign="top" colspan="3"><textarea name="xingcheng" id="xingcheng"><{$xingcheng_1}></textarea>
+              <script type="text/javascript">
+          var editor = CKEDITOR.replace( 'xingcheng' );
+          CKFinder.setupCKEditor( editor, '<{:__PUBLIC__}>/myerp/ckfinder/' ) ;
+          </script></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </fieldset>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+    
+    
+    <table cellspacing="1" cellpadding="0" border="0" width="100%" class="edit view">
+      <tbody>
+          <tr>
+            <th align="left" colspan="8"> <h4 style="color:red">行程信息（二）“PS:如果行程信息（一）填写，将不在报名时候显示行程信息（二）”</h4>
+            </th>
+          </tr>
+      </tbody>
+    </table>
+    
+    
+    <php>$count = 0 ;$t =-1;while ($count < $chanpin['xianlu']['tianshu']) {$t++; </php>
+	<input type="hidden" name="chanpinID[]" value="<{$xingcheng[$count]['chanpinID']}>" />
+    <table cellspacing="1" cellpadding="0" border="0" width="100%" class="edit view">
+      <tbody>
+        <tr>
+          <th align="left" colspan="8"> <h4>行程：第<{$t+1}>天</h4>
+          </th>
+        </tr>
+        <tr>
+          <td valign="top" scope="row" style="min-width:100px;"> 住宿: </td>
+          <td valign="top" scope="row">
+          <input type="text" name="place[]" value="<{$xingcheng[$count]['place']}>" style="width:200px;"/>
+          </td>
+          <td valign="top" scope="row" style="min-width:100px;"> 餐饮: </td>
+          <td valign="top" scope="row">
+              <input type="checkbox" name="chanyin<{$count}>[]" value="早餐"/ <php>if(strstr($xingcheng[$count]['chanyin'],'早餐')){</php>checked="checked"<php>}</php> /> <label style=" margin:0 4px 0 4px">早餐</label>
+              <input type="checkbox" name="chanyin<{$count}>[]" value="午餐"/ <php>if(strstr($xingcheng[$count]['chanyin'],'午餐')){</php>checked="checked"<php>}</php> /> <label style=" margin:0 4px 0 4px">午餐</label>
+              <input type="checkbox" name="chanyin<{$count}>[]" value="晚餐"/ <php>if(strstr($xingcheng[$count]['chanyin'],'晚餐')){</php>checked="checked"<php>}</php> /> <label style=" margin:0 4px 0 4px">晚餐</label>
+          </td>
+        </tr>
+        
+        <tr>
+          <td valign="top" scope="row" style="min-width:100px;"> 交通: </td>
+          <td valign="top" scope="row">
+              <input type="checkbox" name="tools<{$count}>[]" value="飞机"/ <php>if(strstr($xingcheng[$count]['tools'],'飞机')){</php>checked="checked"<php>}</php> /> <label style=" margin:0 4px 0 4px">飞机</label>
+              <input type="checkbox" name="tools<{$count}>[]" value="火车"/ <php>if(strstr($xingcheng[$count]['tools'],'火车')){</php>checked="checked"<php>}</php> /> <label style=" margin:0 4px 0 4px">火车</label>
+              <input type="checkbox" name="tools<{$count}>[]" value="轮船"/ <php>if(strstr($xingcheng[$count]['tools'],'轮船')){</php>checked="checked"<php>}</php> /> <label style=" margin:0 4px 0 4px">轮船</label>
+              <input type="checkbox" name="tools<{$count}>[]" value="汽车"/ <php>if(strstr($xingcheng[$count]['tools'],'汽车')){</php>checked="checked"<php>}</php> /> <label style=" margin:0 4px 0 4px">汽车</label>
+          </td>
+        </tr>
+        
+        <tr>
+          <td valign="top" colspan="4" scope="row">
+            <table cellspacing="0" cellpadding="0" border="0" width="100%">
+              <tbody>
+                <tr>
+                  <td valign="top">
+                        <fieldset style="border:#CBDAE6 1px solid">
+                          <legend>内容</legend>
+                          <table cellspacing="1" cellpadding="0" border="0" width="100%" class="edit">
+                            <tbody>
+                              <tr>
+                                <td>
+                                <textarea style="width:99%; resize:none" rows="6" id="content<{$count}>" name="content[]"><{$xingcheng[$count]['content']}></textarea>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </fieldset>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+	<php>$count++;}</php>
+    
+    
+    
+    
+</form>
+    
+  </div>
+</div>
+
+<tp:includeCA file="Index:footer" />
+
+<script>
+function save(){
+	document.getElementById('xingcheng').value = CKEDITOR.instances.xingcheng.getData();
+	ThinkAjax.sendForm('form','<{:SITE_INDEX}>Chanpin/dopostxingcheng/',doComplete,'resultdiv');
+}
+function doComplete(data,status){
+	if(status == 1){
+		location.reload();
+	}
+}
+</script>
+
+<script src="<{:__PUBLIC__}>/myerp/zeroclipboard-master/ZeroClipboard.js"></script>
+<script src="<{:__PUBLIC__}>/myerp/zeroclipboard-master/main.js"></script>
+
+
+
+

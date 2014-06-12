@@ -1,0 +1,177 @@
+
+<tp:includeCA file="Index:showheader" />
+
+<link href="<{:__PUBLIC__}>/gulianstyle/styles/jquery.autocomplete.css" rel="stylesheet" type="text/css" />
+<script src="<{:__PUBLIC__}>/gulianstyle/styles/jquery.autocomplete.min.js" language="javascript"></script>
+<script language="javascript" type="text/javascript" src="<{:__PUBLIC__}>/myerp/My97DatePicker/WdatePicker.js"></script>
+<script language="javascript" type="text/javascript" src="<{:__PUBLIC__}>/myerp/Chanpin/xianlu.js"></script>
+<style>
+.mytem td { border:none}
+.list_new tr td {
+	padding: 0px 8px 0px 5px !important;
+	vertical-align: middle;
+}
+</style>
+<div id="main">
+
+  <div id="content" style="margin-left:5px; padding-left:0px; border-left:none">
+  
+            <div id="resultdiv" class="resultdiv"></div>
+            <div id="resultdiv_2" class="resultdiv"></div>
+            
+            <include file="Index:search_xianlu_xiaoshou" />
+            
+            <div id="mysearchdiv" style="margin:10px 0 0 0;">
+              <ul id="searchTabs" class="tablist tablist_2">
+                <li> <a 
+                  <php>if(!$markpos){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Xiaoshou/index">全部</a> </li>
+                <li> <a 
+                  <php>if($markpos == '近郊游'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Xiaoshou/index/xianlu_kind/近郊游">近郊游</a> </li>
+                <li> <a 
+                  <php>if($markpos == '长线游'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Xiaoshou/index/xianlu_kind/长线游">长线游</a> </li>
+                <li> <a 
+                  <php>if($markpos == '自由人'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Xiaoshou/index/xianlu_kind/自由人">自由人</a> </li>
+                <li> <a 
+                  <php>if($markpos == '包团'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Xiaoshou/index/xianlu_kind/包团">包团</a> </li>
+                <li> <a 
+                  <php>if($markpos == '韩国'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Xiaoshou/index/xianlu_kind/韩国">韩国</a> </li>
+                <li> <a 
+                  <php>if($markpos == '日本'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Xiaoshou/index/xianlu_kind/日本">日本</a> </li>
+                <li> <a 
+                  <php>if($markpos == '台湾'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Xiaoshou/index/xianlu_kind/台湾">台湾</a> </li>
+                <li> <a 
+                  <php>if($markpos == '港澳'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Xiaoshou/index/xianlu_kind/港澳">港澳</a> </li>
+                <li> <a 
+                  <php>if($markpos == '东南亚'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Xiaoshou/index/xianlu_kind/东南亚">东南亚</a> </li>
+                <li> <a 
+                  <php>if($markpos == '欧美岛'){</php>
+                  class="current"
+                  <php>}</php>
+                  href="<{:SITE_INDEX}>Xiaoshou/index/xianlu_kind/欧美岛">欧美岛</a> </li>
+              </ul>
+            </div>
+            
+            <table cellpadding="0" cellspacing="0" width="100%" class="list view list_new" style="border-bottom:none; margin-bottom:0px;">
+              <tbody>
+              
+                <tr class="pagination">
+                  <td colspan="11">
+                  <table cellpadding="0" cellspacing="0" width="100%" class="paginationTable">
+                      <tbody>
+                        <tr>
+                          <td nowrap="nowrap" align="right" class="paginationChangeButtons" style="color:#090"><{$page}></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    </td>
+                </tr>
+                <tr height="20">
+                  <th scope="col" nowrap="nowrap"><div> 序号 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:300px;"><div> 产品名称 </div></th>
+                  <th scope="col" nowrap="nowrap"><div> 售价 </div></th>
+                  <th scope="col" nowrap="nowrap"><div> 销售类型 </div></th>
+                  <th scope="col" nowrap="nowrap"><div> 创建时间 </div></th>
+                  <th scope="col" nowrap="nowrap"><div> 发布人 </div></th>
+                  <th scope="col" nowrap="nowrap" style="min-width:50px;"><div> 单位 </div></th>
+                </tr>
+                
+                <php>$i = 0;foreach($chanpin_list as $v){$i++; </php>
+                <tr height="40" class="evenListRowS1">
+                  <td valign="top" align="left" scope="row"><{$i}></td>
+                  <td valign="top" align="center" scope="row"><strong style="color:blue"><{$v['xianlu_title']}></strong></td>
+                  <td valign="top" align="left" scope="row"><{$v['adultprice']}>元</td>
+                  <td valign="top" align="left" scope="row"><{$v['type']}></td>
+                  <td valign="top" align="left" scope="row"><php>echo date('Y/m/d H:i',$v['time']);</php></td>
+                  <td valign="top" align="left" scope="row"><{$v['xianlu']['xianlu']['user_name']}></td>
+                  <td valign="top" align="left" scope="row"><{$v['xianlu']['xianlu']['bumen_copy']}></td>
+                </tr>  
+                <tr height="40" class="evenListRowS1">
+                    <td valign="top" align="left" scope="row" colspan="10">
+                    <table cellpadding="0" cellspacing="0" width="100%" class="list_new view mytem" style="border:none">
+                      <tbody>
+                        <tr>
+                          <td valign="top" align="left" style="vertical-align:top;" width="10" >
+                          <input type="button" class="button" value=" 展开 " onclick="opendatelist(<{$i}>)" id="buttomopen<{$i}>" style="float:left">
+                          <input type="button" class="button" value=" 收起 " onclick="closedatelist(<{$i}>)" id="buttomclose<{$i}>" style="display:none; float:left; ">
+                          </td>
+                          <td valign="top" align="left" colspan="10" class="sall_td" style=" height:37px; overflow:hidden; width:100%; float:left " id="sall_td<{$i}>">
+                            <php>foreach($v['zituan'] as $vol){</php>
+                                <a target="_blank" href="<{:SITE_INDEX}>Xiaoshou/zituan/chanpinID/<{$vol['chanpinID']}>/xianluID/<{$vol['parentID']}>/shoujiaID/<{$v['dataID']}>" ><{$vol['chutuanriqi']}><br /> 报名:<{$baoming_renshu[$vol['chanpinID']]}>人 剩余:<{$vol['shengyurenshu']}></a>
+                            <php>}</php>
+                          </td>
+                        </tr>  
+                      </tbody>
+                    </table>
+                    </td>
+                </tr>  
+                <php>}</php>
+                
+                <tr class="pagination">
+                  <td colspan="11">
+                  <table cellpadding="0" cellspacing="0" width="100%" class="paginationTable">
+                      <tbody>
+                        <tr>
+                          <td nowrap="nowrap" align="right" class="paginationChangeButtons" style="color:#090"><{$page}></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+            
+            
+                
+  </div>
+</div>
+
+<tp:includeCA file="Index:footer" />
+
+<script language="javascript"> 
+function opendatelist(mark){
+		jQuery("#sall_td"+mark).css( "height","100%"); 
+		jQuery("#buttomclose"+mark).show();
+		jQuery("#buttomopen"+mark).hide();
+}
+function closedatelist(mark){
+		jQuery("#sall_td"+mark).css( "height","37px"); 
+		jQuery("#buttomopen"+mark).show();
+		jQuery("#buttomclose"+mark).hide();
+}
+function dosearch(str){
+		window.location = SITE_INDEX+'Xiaoshou/index'+str;
+}
+
+</script>
+
+
